@@ -3,9 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Mako M3 Camera View</title>
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <img src="http://192.168.1.161:8081/video.mjpg" alt="Webcam Feed" />
+    <div id="topBar">
+        <a class="topbarlinks" href="home.html"><img src="images/logo.png" alt="logo"></a>
+        <h1 id="title">Camera View</h1>
+    </div>
+    <section id="cameraViews">
+        <img id="mainCameraView" class="cameraView" src="http://192.168.1.161:8081/video.mjpg" alt="Main Webcam Feed" onclick="openFullscreen(this)" />
+        <div id="fieldGraphic">
+            <div class="horizontalSelectors">
+                <input class="cameraSelectors" type="radio" name="cameraSelection" value="http://192.168.1.161:8081/video.mjpg" onchange="updateMainImage(this)">
+                <input class="cameraSelectors" type="radio" name="cameraSelection" value="http://192.168.1.161:8082/video.mjpg" onchange="updateMainImage(this)">
+            </div>
+            <img id="fieldImg" src="images/field.jpg" alt="field">
+            <div class="horizontalSelectors">
+                <input class="cameraSelectors" type="radio" name="cameraSelection" value="http://192.168.1.161:8081/video.mjpg" onchange="updateMainImage(this)">
+                <input class="cameraSelectors" type="radio" name="cameraSelection" value="http://192.168.1.161:8082/video.mjpg" onchange="updateMainImage(this)">
+            </div>
+        </div>
+    </section>
+    <script>
+        function openFullscreen(img) {
+            if (img.requestFullscreen) {
+                img.requestFullscreen();
+            } else if (img.webkitRequestFullscreen) { // Safari
+                img.webkitRequestFullscreen();
+            } else if (img.msRequestFullscreen) { // IE11
+                img.msRequestFullscreen();
+            }
+        }
+
+        function updateMainImage(radio) {
+            // Get the value of the selected radio button
+            const newSrc = radio.value;
+            // Update the main camera view's src
+            document.getElementById('mainCameraView').src = newSrc;
+        }
+    </script>
 </body>
 </html>
