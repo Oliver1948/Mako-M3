@@ -11,8 +11,7 @@
         <a class="topbarlinks" href="home.html"><img src="images/logo.png" alt="logo"></a>
         <h1 id="title">Camera View</h1>
     </div>
-    <section id="cameraViews">
-        <img id="mainCameraView" class="cameraView" src="http://192.168.1.161:8081/video.mjpg" alt="Main Webcam Feed" onclick="openFullscreen(this)" />
+    <section id="content">
         <div id="fieldGraphic">
             <div class="horizontalSelectors">
                 <input class="cameraSelectors" type="radio" name="cameraSelection" value="http://192.168.1.161:8081/video.mjpg" onchange="updateMainImage(this)">
@@ -24,6 +23,7 @@
                 <input class="cameraSelectors" type="radio" name="cameraSelection" value="http://192.168.1.161:8082/video.mjpg" onchange="updateMainImage(this)">
             </div>
         </div>
+        <img id="mainCameraView" class="cameraView" src="http://192.168.1.161:8081/video.mjpg" alt="Main Webcam Feed" onclick="openFullscreen(this)" />
     </section>
     <script>
         function openFullscreen(img) {
