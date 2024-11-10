@@ -9,12 +9,12 @@
 <body>
     <div id="topBar">
         <a class="topbarlinks" href="home.html"><img src="images/logo.png" alt="logo"></a>
-        <h1 id="title">Camera View</h1>
+        <h1 id="title">CameraView</h1>
     </div>
     <section id="content">
         <div id="fieldGraphic">
             <div class="horizontalSelectors">
-                <input class="cameraSelectors" type="radio" name="cameraSelection" value="http://192.168.1.161:8081/video.mjpg" onchange="updateMainImage(this)">
+                <input class="cameraSelectors" type="radio" name="cameraSelection" value="http://127.0.0.1:8081/video.mjpg" onchange="updateMainImage(this)">
                 <input class="cameraSelectors" type="radio" name="cameraSelection" value="http://192.168.1.159:8080/?action=stream" onchange="updateMainImage(this)">
             </div>
             <img id="fieldImg" src="images/field.jpg" alt="field">
