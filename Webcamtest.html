@@ -9,39 +9,70 @@
 <body>
     <div id="topBar">
         <a class="topbarlinks" href="home.html"><img src="images/logo.png" alt="logo"></a>
-        <h1 id="title">Camera View</h1>
     </div>
     <section id="content">
         <div id="fieldGraphic">
             <div class="horizontalSelectors">
-                <input class="cameraSelectors" type="radio" name="cameraSelection" value="http://makom3.local:8080/video.mjpg" onchange="updateMainImage(this)">
-                <input class="cameraSelectors" type="radio" name="cameraSelection" value="http://192.168.1.159:8080/?action=stream" onchange="updateMainImage(this)">
+                <input class="cameraSelectorsLeft" type="radio" name="cameraSelection" value="http://makom3camera2.local:8080/?action=stream" onchange="updateMainImage(this)">
+                <input class="cameraSelectorsLeft" type="radio" name="cameraSelection" value="http://makom3camera2.local:8081/?action=stream" onchange="updateMainImage(this)">
             </div>
-            <img id="fieldImg" src="images/field.jpg" alt="field">
+            <img id="fieldImg" src="images/field.png" alt="field">
             <div class="horizontalSelectors">
-                <input class="cameraSelectors" type="radio" name="cameraSelection" value="http://makom3.local:8081/?action=stream" onchange="updateMainImage(this)">
-                <input class="cameraSelectors" type="radio" name="cameraSelection" value="http://192.168.1.161:8082/video.mjpg" onchange="updateMainImage(this)">
+                <input class="cameraSelectorsRight" type="radio" name="cameraSelection" value="http://makom3camera2.local:8080/?action=stream" onchange="updateMainImage(this)">
+                <input class="cameraSelectorsRight" type="radio" name="cameraSelection" value="http://makom3camera2.local:8081/?action=stream" onchange="updateMainImage(this)">
             </div>
         </div>
-        <img id="mainCameraView" class="cameraView" src="http://192.168.1.161:8081/video.mjpg" alt="Main Webcam Feed" onclick="openFullscreen(this)" />
+        <!-- Single Camera View -->
+        <div id="singleCameraView" style="display: none;">
+            <img id="mainCameraView" class="videoFeedLarge" src="" alt="Main Camera View">
+        </div>
+        <!-- Table of Cameras -->
+        <table id="cameraGrid">
+            <tr>
+                <td><img class="videoFeedSmall" src="http://makom3camera2.local:8080/?action=stream" alt="deez"></td>
+                <td><img class="videoFeedSmall" src="http://makom3camera2.local:8081/?action=stream" alt="deez"></td>
+            </tr>
+            <tr>
+                <td><img class="videoFeedSmall" src="http://makom3camera2.local:8080/?action=stream" alt="deez"></td>
+                <td><img class="videoFeedSmall" src="http://makom3camera2.local:8081/?action=stream" alt="deez"></td>
+            </tr>
+        </table>
     </section>
     <script>
-        function openFullscreen(img) {
-            if (img.requestFullscreen) {
-                img.requestFullscreen();
-            } else if (img.webkitRequestFullscreen) { // Safari
-                img.webkitRequestFullscreen();
-            } else if (img.msRequestFullscreen) { // IE11
-                img.msRequestFullscreen();
+        // Function to update the main camera view
+        function updateMainImage(radio) {
+            const singleView = document.getElementById('singleCameraView');
+            const tableView = document.getElementById('cameraGrid');
+            const mainCameraView = document.getElementById('mainCameraView');
+
+            if (radio.checked) {
+                // Show single camera view and hide table view
+                mainCameraView.src = radio.value;
+                singleView.style.display = 'inline-table';
+                tableView.style.display = 'none';
+            } else {
+                // Reset the views if no camera is selected
+                mainCameraView.src = '';
+                singleView.style.display = 'none';
+                tableView.style.display = 'inline-table';
             }
         }
 
-        function updateMainImage(radio) {
-            // Get the value of the selected radio button
-            const newSrc = radio.value;
-            // Update the main camera view's src
-            document.getElementById('mainCameraView').src = newSrc;
-        }
+        // Logic to allow radio deselection
+        const radios = document.querySelectorAll('input[type="radio"]');
+        let lastChecked = null;
+
+        radios.forEach(radio => {
+            radio.addEventListener('click', function () {
+                if (this === lastChecked) {
+                    this.checked = false;
+                    lastChecked = null;
+                    updateMainImage(this); // Reset the view when deselected
+                } else {
+                    lastChecked = this;
+                }
+            });
+        });
     </script>
 </body>
 </html>
